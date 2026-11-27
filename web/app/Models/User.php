@@ -50,12 +50,39 @@ class User extends Authenticatable
         return $this->role === 'pengguna';
     }
 
+    public function displayName(): string
+    {
+        $clean = preg_replace('/\s*\((?:Admin(?:\s*&\s*Peneliti)?|Administrator(?:\s*&\s*Peneliti)?|Tenaga Medis(?:\s*\/\s*Klinisi)?|Penilai Klinis(?:\s*\d+)?|Pengguna Umum|Pengguna)\)\s*$/iu', '', trim((string) $this->name));
+        return $clean !== '' ? $clean : (string) $this->name;
+    }
+
+    public function initials(): string
+    {
+        $name = preg_replace('/^(?:dr\.|Ns\.|Prof\.|Dr\.)\s+/iu', '', $this->displayName());
+        $parts = preg_split('/[\s,]+/', trim((string) $name), -1, PREG_SPLIT_NO_EMPTY);
+        if (empty($parts)) {
+            return 'DX';
+        }
+        $first = mb_substr($parts[0], 0, 1);
+        $second = count($parts) > 1 ? mb_substr($parts[1], 0, 1) : mb_substr($parts[0], 1, 1);
+        return mb_strtoupper($first . $second);
+    }
+
     public function roleBadgeLabel(): string
     {
         return match ($this->role) {
-            'admin' => 'Administrator & Peneliti',
-            'nakes' => 'Tenaga Medis / Klinisi',
+            'admin' => 'Admin & Peneliti',
+            'nakes' => 'Tenaga Medis',
             default => 'Pengguna Umum',
+        };
+    }
+
+    public function roleBadgeClasses(): string
+    {
+        return match ($this->role) {
+            'admin' => 'bg-indigo-50 text-indigo-700 border-indigo-200',
+            'nakes' => 'bg-sky-50 text-sky-700 border-sky-200',
+            default => 'bg-emerald-50 text-emerald-700 border-emerald-200',
         };
     }
 

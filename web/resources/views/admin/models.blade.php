@@ -1,61 +1,54 @@
 @extends('layouts.app')
 
 @section('title', 'Registri Versi Model XGBoost')
+@section('page_title', 'Tata Kelola · Registri Model')
 
 @section('content')
 <div class="space-y-6">
-    <!-- Admin Sub-navigation -->
-    <div class="flex flex-wrap items-center justify-between gap-4 bg-white rounded-2xl border border-slate-200/80 px-5 py-3 shadow-sm">
-        <div class="flex flex-wrap items-center gap-2 text-xs font-bold">
-            <a href="{{ route('admin.experiments') }}" class="px-3 py-1.5 rounded-xl text-slate-600 hover:bg-slate-100">Dasbor Eksperimen (RM1–RM6)</a>
-            <a href="{{ route('admin.llm.config') }}" class="px-3 py-1.5 rounded-xl text-slate-600 hover:bg-slate-100">API Key Layanan AI (LLM)</a>
-            <a href="{{ route('admin.models') }}" class="px-3 py-1.5 rounded-xl bg-teal-50 text-teal-800 border border-teal-200">Registri Model</a>
-            <a href="{{ route('admin.users') }}" class="px-3 py-1.5 rounded-xl text-slate-600 hover:bg-slate-100">Manajemen Pengguna</a>
-            <a href="{{ route('admin.audit') }}" class="px-3 py-1.5 rounded-xl text-slate-600 hover:bg-slate-100">Log Audit</a>
-        </div>
-    </div>
+    @include('admin.partials.governance-tabs')
 
-    <div class="bg-white rounded-3xl border border-slate-200/80 p-6 sm:p-8 shadow-sm">
-        <div class="mb-6">
-            <h1 class="text-2xl font-extrabold text-slate-900">Registri Versi Model Klasifikasi Diabetes</h1>
-            <p class="text-xs text-slate-500 mt-1">Kelola versi model XGBoost yang aktif digunakan untuk melayani skrining pengguna.</p>
+    <div class="bg-white rounded-2xl border border-slate-200/90 shadow-2xs overflow-hidden">
+        <div class="px-6 py-5 border-b border-slate-200/80">
+            <h1 class="text-xl font-extrabold text-slate-900">Registri Versi Model Klasifikasi Diabetes</h1>
+            <p class="text-xs text-slate-500 mt-0.5">Kelola versi model XGBoost yang aktif melayani prediksi skrining pengguna.</p>
         </div>
 
-        <div class="overflow-x-auto">
-            <table class="w-full text-left border-collapse text-xs">
-                <thead>
-                    <tr class="border-b border-slate-200 text-slate-500 uppercase bg-slate-50/80">
-                        <th class="py-3 px-3">Tag Versi</th>
-                        <th class="py-3 px-3">Nama Model & Skenario</th>
-                        <th class="py-3 px-3">Skenario Terpilih</th>
-                        <th class="py-3 px-3 text-right">Macro-F1</th>
-                        <th class="py-3 px-3 text-right">Balanced Acc</th>
-                        <th class="py-3 px-3 text-right">Total Prediksi</th>
-                        <th class="py-3 px-3">Status</th>
-                        <th class="py-3 px-3 text-right">Aksi</th>
+        <div class="table-wrapper">
+            <table class="text-left text-xs">
+                <thead class="bg-slate-50 border-b border-slate-200 text-slate-600 font-semibold uppercase">
+                    <tr>
+                        <th scope="col" class="py-3 px-4">Tag Versi</th>
+                        <th scope="col" class="py-3 px-4">Nama Model</th>
+                        <th scope="col" class="py-3 px-4">Teknik</th>
+                        <th scope="col" class="py-3 px-4 text-right">Macro-F1</th>
+                        <th scope="col" class="py-3 px-4 text-right">Balanced Acc</th>
+                        <th scope="col" class="py-3 px-4 text-right">Prediksi</th>
+                        <th scope="col" class="py-3 px-4">Status</th>
+                        <th scope="col" class="py-3 px-4 text-right">Aksi</th>
                     </tr>
                 </thead>
-                <tbody class="divide-y divide-slate-200/60">
+                <tbody class="divide-y divide-slate-200/70">
                     @forelse($models as $m)
-                        <tr>
-                            <td class="py-3 px-3 font-mono font-bold text-slate-900">{{ $m->version_tag }}</td>
-                            <td class="py-3 px-3 font-semibold text-slate-800">{{ $m->name }}</td>
-                            <td class="py-3 px-3 font-mono">{{ $m->code }}</td>
-                            <td class="py-3 px-3 text-right font-mono font-bold text-teal-700">{{ number_format((float)($m->metrics_json['f1_macro'] ?? 0) * 100, 2, ',', '.') }}%</td>
-                            <td class="py-3 px-3 text-right font-mono">{{ number_format((float)($m->metrics_json['balanced_accuracy'] ?? 0) * 100, 2, ',', '.') }}%</td>
-                            <td class="py-3 px-3 text-right font-mono">{{ $m->predictions_count }}</td>
-                            <td class="py-3 px-3">
+                        @php $tm = $m->metrics['test_metrics'] ?? ($m->metrics ?? []); @endphp
+                        <tr class="hover:bg-slate-50/80">
+                            <th scope="row" class="py-3.5 px-4 font-mono font-bold text-slate-900 whitespace-nowrap">{{ $m->version_tag }}</th>
+                            <td class="py-3.5 px-4 font-semibold text-slate-800 whitespace-nowrap">{{ $m->name }}</td>
+                            <td class="py-3.5 px-4 font-mono text-slate-600 whitespace-nowrap">{{ $m->technique }}</td>
+                            <td class="py-3.5 px-4 text-right font-mono font-bold text-teal-700">{{ number_format((float) ($tm['f1_macro'] ?? 0) * 100, 2, ',', '.') }}%</td>
+                            <td class="py-3.5 px-4 text-right font-mono">{{ number_format((float) ($tm['balanced_accuracy'] ?? 0) * 100, 2, ',', '.') }}%</td>
+                            <td class="py-3.5 px-4 text-right font-mono">{{ $m->predictions_count }}</td>
+                            <td class="py-3.5 px-4 whitespace-nowrap">
                                 @if($m->is_active)
-                                    <span class="px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-bold">Aktif</span>
+                                    <span class="px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 font-semibold">Aktif</span>
                                 @else
-                                    <span class="px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-600 font-semibold">Arsip</span>
+                                    <span class="px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-600 border border-slate-200 font-semibold">Arsip</span>
                                 @endif
                             </td>
-                            <td class="py-3 px-3 text-right">
+                            <td class="py-3.5 px-4 text-right whitespace-nowrap">
                                 @if(!$m->is_active)
                                     <form method="POST" action="{{ route('admin.models.activate', $m) }}" class="inline">
                                         @csrf
-                                        <button type="submit" class="px-3 py-1 rounded-lg bg-teal-600 hover:bg-teal-700 text-white font-bold">Aktifkan</button>
+                                        <button type="submit" class="px-3 py-1.5 rounded-lg bg-teal-700 hover:bg-teal-800 text-white font-semibold transition">Aktifkan</button>
                                     </form>
                                 @else
                                     <span class="text-slate-400">Sedang Digunakan</span>

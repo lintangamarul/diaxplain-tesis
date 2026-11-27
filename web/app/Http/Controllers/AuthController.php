@@ -99,7 +99,7 @@ class AuthController extends Controller
         $request->session()->regenerate();
         AuditLog::record('auth.demo_switch', $user->email, ['role' => $user->role], $user->id);
 
-        return redirect()->route('dashboard')->with('success', "Berhasil masuk sebagai akun demo: {$user->name} ({$user->roleBadgeLabel()}).");
+        return redirect()->route('dashboard')->with('success', "Berhasil masuk sebagai akun demo: {$user->displayName()} — {$user->roleBadgeLabel()}.");
     }
 
     public function logout(Request $request): RedirectResponse
