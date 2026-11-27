@@ -247,4 +247,64 @@ class DiaXplainTest extends TestCase
 
         $this->assertSame('sk-test-thirdparty-key-1234567890', Setting::getValue('llm_api_key'));
     }
+
+    public function test_saas_ui_refactor_multi_role_rendering_and_clean_display_names(): void
+    {
+        // Guest layout pages
+        $this->get('/')->assertStatus(200)->assertSee('Tiga Tahap Analisis Terstruktur');
+        $this->get('/login')->assertStatus(200)->assertSee('Masuk ke DiaXplain');
+        $this->get('/register')->assertStatus(200)->assertSee('Daftar Akun DiaXplain');
+        $this->get('/tentang-model')->assertStatus(200)->assertSee('Codebook 21 Fitur');
+
+        // Clean display names (no duplicated role suffix)
+        $pengguna = User::where('email', 'pengguna@diaxplain.id')->firstOrFail();
+        $nakes = User::where('email', 'nakes@diaxplain.id')->firstOrFail();
+        $admin = User::where('email', 'admin@diaxplain.id')->firstOrFail();
+
+        $this->assertSame('Budi Santoso', $pengguna->displayName());
+        $this->assertSame('dr. Ratna Kusuma, Sp.PD', $nakes->displayName());
+        $this->assertSame('Lintang Amarul Fatah', $admin->displayName());
+
+        // Demo login flash message has no duplicated role suffix
+        $this->post('/demo-login/pengguna')
+            ->assertRedirect(route('dashboard'))
+            ->assertSessionHas('success', 'Berhasil masuk sebagai akun demo: Budi Santoso — Pengguna Umum.');
+
+        // Pengguna Umum workspace & pages
+        $this->actingAs($pengguna)
+            ->get('/dashboard')
+            ->assertStatus(200)
+            ->assertSee('Selamat datang, Budi Santoso')
+            ->assertDontSee('Budi Santoso (Pengguna Umum)')
+            ->assertDontSee('Klinis &amp; Evaluasi', false)
+            ->assertDontSee('Riset &amp; Sistem', false);
+
+        $this->actingAs($pengguna)->get('/skrining/baru')->assertStatus(200)->assertSee('Profil &amp; Biometrik', false);
+        $this->actingAs($pengguna)->get('/skrining/riwayat')->assertStatus(200)->assertSee('Privasi &amp; Hak Penghapusan Data Pribadi', false);
+        $this->actingAs($pengguna)->get('/skrining/bandingkan')->assertStatus(200)->assertSee('Legenda Kontribusi Fitur TreeSHAP');
+
+        // Tenaga Medis workspace
+        $this->actingAs($nakes)
+            ->get('/dashboard')
+            ->assertStatus(200)
+            ->assertSee('dr. Ratna Kusuma, Sp.PD')
+            ->assertDontSee('dr. Ratna Kusuma, Sp.PD (Tenaga Medis)')
+            ->assertSee('Penilaian Narasi (RM6)');
+
+        $this->actingAs($nakes)->get('/nakes/penilaian')->assertStatus(200)->assertSee('Formulir Rubrik Likert');
+
+        // Admin tabbed workspace & governance pages
+        $this->actingAs($admin)
+            ->get('/dashboard')
+            ->assertStatus(200)
+            ->assertSee('Ringkasan Sistem &amp; AI', false)
+            ->assertSee('OpenAI Compatible')
+            ->assertDontSee('openai_compatible (gpt-4o-mini)');
+
+        $this->actingAs($admin)->get('/admin/eksperimen')->assertStatus(200)->assertSee('Matriks Perbandingan Eksperimen');
+        $this->actingAs($admin)->get('/admin/llm-config')->assertStatus(200)->assertSee('Konfigurasi API Key Layanan AI');
+        $this->actingAs($admin)->get('/admin/models')->assertStatus(200)->assertSee('Registri Versi Model');
+        $this->actingAs($admin)->get('/admin/users')->assertStatus(200)->assertSee('Lintang Amarul Fatah');
+        $this->actingAs($admin)->get('/admin/audit-logs')->assertStatus(200)->assertSee('Jejak Audit Aktivitas');
+    }
 }

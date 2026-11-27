@@ -4,361 +4,221 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title', 'SPK Klasifikasi Status Diabetes') | DiaXplain</title>
-
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-
-    <!-- Tailwind CSS, Alpine.js, Chart.js -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['"Plus Jakarta Sans"', 'system-ui', '-apple-system', 'sans-serif'],
-                        mono: ['"JetBrains Mono"', 'monospace'],
-                    },
-                    colors: {
-                        brand: {
-                            50: '#f0fdfa',
-                            100: '#ccfbf1',
-                            200: '#99f6e4',
-                            500: '#14b8a6',
-                            600: '#0d9488',
-                            700: '#0f766e',
-                            800: '#115e59',
-                            900: '#134e4a',
-                        }
-                    }
-                }
-            }
-        }
-    </script>
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.8/dist/cdn.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
-
-    <style>
-        [x-cloak] { display: none !important; }
-
-        /* Canonical visually-hidden utility with focus-within opt-out for skip links */
-        .visually-hidden:where(:not(:focus-within, :active)) {
-            position: absolute !important;
-            clip-path: inset(50%) !important;
-            overflow: hidden !important;
-            width: 1px !important;
-            height: 1px !important;
-            margin: -1px !important;
-            padding: 0 !important;
-            border: 0 !important;
-            white-space: nowrap !important;
-        }
-
-        .skip-link:focus {
-            position: fixed;
-            inset-block-start: 0.75rem;
-            inset-inline-start: 0.75rem;
-            z-index: 9999;
-            background: #0f172a;
-            color: #ffffff;
-            padding: 0.75rem 1.25rem;
-            border-radius: 0.5rem;
-            font-weight: 600;
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
-        }
-
-        /* High-contrast focus ring per accessibility guidelines */
-        :where(a:any-link, button, input, select, textarea, [tabindex="0"]):focus-visible {
-            outline: 3px solid #0284c7;
-            outline-offset: 2px;
-        }
-
-        /* Minimum tap target size & iOS zoom prevention */
-        input:not([type="checkbox"]):not([type="radio"]),
-        select,
-        .tap-target {
-            font-size: 1rem;
-            min-block-size: 48px;
-        }
-
-        /* Deferred validation feedback after user interaction (:user-invalid) */
-        input:user-invalid,
-        select:user-invalid,
-        input.user-invalid-fallback,
-        select.user-invalid-fallback {
-            border-color: #dc2626 !important;
-            background-color: #fef2f2 !important;
-        }
-
-        input:user-invalid ~ .field-error-msg,
-        input.user-invalid-fallback ~ .field-error-msg {
-            display: flex !important;
-        }
-
-        /* Responsive container-query table wrapper with sticky headers */
-        .table-wrapper {
-            overflow: auto;
-            max-inline-size: 100%;
-            container-type: inline-size;
-        }
-        .table-wrapper table {
-            border-collapse: separate;
-            border-spacing: 0;
-            width: 100%;
-        }
-        .table-wrapper thead {
-            position: sticky;
-            inset-block-start: 0;
-            z-index: 2;
-        }
-        .table-wrapper tbody th {
-            position: sticky;
-            inset-inline-start: 0;
-            z-index: 1;
-            background: #ffffff;
-        }
-
-        dialog::backdrop {
-            background: rgba(15, 23, 42, 0.55);
-            backdrop-filter: blur(3px);
-        }
-    </style>
+    <title>@yield('title', 'Workspace SPK Diabetes') | DiaXplain</title>
+    @include('layouts.partials.head-assets')
 </head>
-<body class="min-h-full bg-slate-50 text-slate-800 antialiased flex flex-col font-sans">
+@php
+    $authUser = auth()->user();
+@endphp
+<body
+    x-data="{
+        sidebarCollapsed: localStorage.getItem('dx_sidebar_collapsed') === 'true',
+        toggleSidebar() {
+            this.sidebarCollapsed = !this.sidebarCollapsed;
+            localStorage.setItem('dx_sidebar_collapsed', String(this.sidebarCollapsed));
+        }
+    }"
+    class="min-h-full bg-[#F8FAFC] text-slate-800 antialiased font-sans"
+>
     <!-- Accessible Skip Link -->
     <a href="#main-content" class="skip-link visually-hidden">Lewati ke konten utama</a>
 
-    <!-- Top Navigation Header -->
-    <header class="sticky top-0 z-40 bg-white/95 backdrop-blur border-b border-slate-200/80 shadow-xs">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-16 gap-4">
-                <!-- Brand Logo -->
-                <div class="flex items-center gap-3">
-                    <a href="{{ auth()->check() ? route('dashboard') : route('landing') }}" class="flex items-center gap-2.5 group">
-                        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-teal-600 to-sky-700 flex items-center justify-center text-white shadow-sm group-hover:shadow-md transition">
-                            <svg aria-hidden="true" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+    <!-- Mobile Slide-Over Navigation Drawer (Native Modal <dialog class="Drawer">) -->
+    <dialog id="mobile-nav-drawer" class="Drawer lg:hidden" aria-label="Menu Navigasi DiaXplain">
+        <div class="Drawer-scroller">
+            <aside class="Drawer-sheet">
+                @include('layouts.partials.sidebar-nav', ['isDrawer' => true])
+            </aside>
+        </div>
+    </dialog>
+
+    <div class="min-h-screen flex">
+        <!-- Desktop Collapsible Left Sidebar (260px expanded / 76px collapsed) -->
+        <aside
+            :class="sidebarCollapsed ? 'w-[76px]' : 'w-[260px]'"
+            class="hidden lg:flex lg:flex-col shrink-0 bg-white border-r border-slate-200/90 sticky top-0 h-screen transition-[width] duration-200 ease-out z-30"
+        >
+            @include('layouts.partials.sidebar-nav', ['isDrawer' => false])
+        </aside>
+
+        <!-- Main Workspace Column -->
+        <div class="flex-1 min-w-0 flex flex-col">
+            <!-- Sticky Topbar (64px) -->
+            <header class="sticky top-0 z-30 h-16 bg-white/95 backdrop-blur border-b border-slate-200/90 px-4 sm:px-6 flex items-center justify-between gap-4">
+                <!-- Left: Sidebar Toggle + Breadcrumb / Active Page Title -->
+                <div class="flex items-center gap-3 min-w-0">
+                    <!-- Mobile Drawer Button -->
+                    <button
+                        type="button"
+                        id="mobile-drawer-open"
+                        aria-label="Buka menu navigasi"
+                        aria-expanded="false"
+                        aria-controls="mobile-nav-drawer"
+                        class="lg:hidden w-9 h-9 rounded-lg border border-slate-200 flex items-center justify-center text-slate-600 hover:bg-slate-100 hover:text-slate-900 shrink-0 transition"
+                    >
+                        <svg aria-hidden="true" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
+                        </svg>
+                    </button>
+
+                    <!-- Desktop Collapse Toggle Button -->
+                    <button
+                        type="button"
+                        @click="toggleSidebar()"
+                        :aria-label="sidebarCollapsed ? 'Perluas sidebar' : 'Ciutkan sidebar'"
+                        :aria-expanded="(!sidebarCollapsed).toString()"
+                        class="hidden lg:inline-flex w-9 h-9 rounded-lg border border-slate-200 items-center justify-center text-slate-500 hover:bg-slate-100 hover:text-slate-900 shrink-0 transition"
+                    >
+                        <svg aria-hidden="true" class="w-4 h-4 transition-transform duration-200" :class="sidebarCollapsed ? 'rotate-180' : ''" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M11 19l-7-7 7-7m8 14l-7-7 7-7"/>
+                        </svg>
+                    </button>
+
+                    <!-- Breadcrumb / Active Page Title -->
+                    <div class="min-w-0 flex items-center gap-2 text-sm">
+                        <span class="hidden sm:inline text-slate-400 font-medium">DiaXplain</span>
+                        <span class="hidden sm:inline text-slate-300">/</span>
+                        <span class="font-bold text-slate-900 truncate">
+                            @hasSection('page_title')
+                                @yield('page_title')
+                            @else
+                                @yield('title', 'Dashboard')
+                            @endif
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Right: Quick CTA + User Profile Dropdown -->
+                <div class="flex items-center gap-3 shrink-0">
+                    @if(!request()->routeIs('skrining.create'))
+                        <a
+                            href="{{ route('skrining.create') }}"
+                            class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-teal-700 hover:bg-teal-800 text-white text-xs sm:text-sm font-semibold whitespace-nowrap shadow-xs transition"
+                        >
+                            <svg aria-hidden="true" class="w-4 h-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/>
                             </svg>
-                        </div>
-                        <div>
-                            <div class="flex items-center gap-2">
-                                <span class="font-extrabold text-lg tracking-tight text-slate-900">Dia<span class="text-teal-600">Xplain</span></span>
-                                <span class="hidden sm:inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-semibold bg-teal-50 text-teal-700 border border-teal-200">
-                                    XGBoost + SHAP + LLM
+                            <span class="hidden sm:inline">Skrining Baru</span>
+                            <span class="sm:hidden">Skrining</span>
+                        </a>
+                    @endif
+
+                    @if($authUser)
+                        <!-- User Profile Popover Trigger -->
+                        <div class="relative">
+                            <button
+                                type="button"
+                                id="user-profile-trigger"
+                                popovertarget="user-profile-menu"
+                                aria-haspopup="menu"
+                                aria-expanded="false"
+                                class="flex items-center gap-2.5 pl-1.5 pr-2.5 py-1.5 rounded-xl border border-slate-200/90 bg-white hover:bg-slate-50 transition"
+                            >
+                                <span class="w-8 h-8 rounded-lg bg-gradient-to-br from-teal-700 to-slate-800 text-white text-xs font-bold flex items-center justify-center shrink-0">
+                                    {{ $authUser->initials() }}
                                 </span>
-                            </div>
-                            <p class="text-[11px] text-slate-500 hidden md:block">Sistem Pendukung Keputusan Klasifikasi Status Diabetes</p>
-                        </div>
-                    </a>
-                </div>
-
-                <!-- Primary Navigation -->
-                <nav aria-label="Utama" class="hidden lg:flex items-center gap-1">
-                    @auth
-                        <a href="{{ route('dashboard') }}" class="px-3.5 py-2 rounded-lg text-sm font-semibold transition {{ request()->routeIs('dashboard') ? 'bg-teal-50 text-teal-700' : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900' }}">
-                            Dashboard
-                        </a>
-                        <a href="{{ route('skrining.create') }}" class="px-3.5 py-2 rounded-lg text-sm font-semibold transition {{ request()->routeIs('skrining.create') ? 'bg-teal-600 text-white shadow-xs' : 'text-teal-700 bg-teal-50/70 hover:bg-teal-100' }}">
-                            + Skrining Baru
-                        </a>
-                        <a href="{{ route('skrining.index') }}" class="px-3.5 py-2 rounded-lg text-sm font-semibold transition {{ request()->routeIs('skrining.index') || request()->routeIs('skrining.show') ? 'bg-teal-50 text-teal-700' : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900' }}">
-                            Riwayat Skrining
-                        </a>
-                        <a href="{{ route('skrining.compare') }}" class="px-3.5 py-2 rounded-lg text-sm font-semibold transition {{ request()->routeIs('skrining.compare') ? 'bg-teal-50 text-teal-700' : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900' }}">
-                            Bandingkan
-                        </a>
-
-                        @if(auth()->user()->isNakes() || auth()->user()->isAdmin())
-                            <a href="{{ route('nakes.ratings.index') }}" class="px-3.5 py-2 rounded-lg text-sm font-semibold transition {{ request()->routeIs('nakes.*') ? 'bg-indigo-50 text-indigo-700' : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900' }}">
-                                Penilaian Narasi (RM6)
-                            </a>
-                        @endif
-
-                        @if(auth()->user()->isAdmin())
-                            <a href="{{ route('admin.experiments') }}" class="px-3.5 py-2 rounded-lg text-sm font-semibold transition {{ request()->routeIs('admin.experiments') ? 'bg-sky-50 text-sky-700' : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900' }}">
-                                Eksperimen E0–E6 & SHAP
-                            </a>
-                            <a href="{{ route('admin.llm.config') }}" class="px-3.5 py-2 rounded-lg text-sm font-semibold transition {{ request()->routeIs('admin.llm.*') ? 'bg-amber-50 text-amber-800 border border-amber-200' : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900' }}">
-                                API Key AI / LLM
-                            </a>
-                            <a href="{{ route('admin.models') }}" class="px-3.5 py-2 rounded-lg text-sm font-semibold transition {{ request()->routeIs('admin.models*') || request()->routeIs('admin.users*') || request()->routeIs('admin.audit*') ? 'bg-slate-100 text-slate-900' : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900' }}">
-                                Tata Kelola
-                            </a>
-                        @endif
-                    @else
-                        <a href="{{ route('landing') }}" class="px-3.5 py-2 rounded-lg text-sm font-semibold transition {{ request()->routeIs('landing') ? 'bg-teal-50 text-teal-700' : 'text-slate-600 hover:bg-slate-100' }}">
-                            Beranda
-                        </a>
-                        <a href="{{ route('about') }}" class="px-3.5 py-2 rounded-lg text-sm font-semibold transition {{ request()->routeIs('about') ? 'bg-teal-50 text-teal-700' : 'text-slate-600 hover:bg-slate-100' }}">
-                            Metodologi & Keterbatasan
-                        </a>
-                    @endauth
-                </nav>
-
-                <!-- User Profile / Auth Actions -->
-                <div class="flex items-center gap-3">
-                    @auth
-                        <div class="hidden sm:flex flex-col items-end">
-                            <span class="text-xs font-bold text-slate-800">{{ auth()->user()->name }}</span>
-                            <span class="text-[11px] font-medium px-2 py-0.5 rounded-full {{ auth()->user()->isAdmin() ? 'bg-purple-100 text-purple-800' : (auth()->user()->isNakes() ? 'bg-sky-100 text-sky-800' : 'bg-emerald-100 text-emerald-800') }}">
-                                {{ auth()->user()->roleBadgeLabel() }}
-                            </span>
-                        </div>
-                        <form action="{{ route('logout') }}" method="POST">
-                            @csrf
-                            <button type="submit" class="px-3 py-2 rounded-lg text-xs font-semibold text-slate-600 hover:text-red-700 hover:bg-red-50 border border-slate-200 transition">
-                                Keluar
+                                <span class="hidden md:flex flex-col items-start text-left leading-tight max-w-[160px]">
+                                    <span class="text-xs font-bold text-slate-900 truncate w-full">{{ $authUser->displayName() }}</span>
+                                    <span class="text-[11px] font-medium text-slate-500 truncate w-full">{{ $authUser->roleBadgeLabel() }}</span>
+                                </span>
+                                <svg aria-hidden="true" class="w-4 h-4 text-slate-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
+                                </svg>
                             </button>
-                        </form>
-                    @else
-                        <a href="{{ route('login') }}" class="px-4 py-2 rounded-lg text-sm font-semibold text-slate-700 hover:bg-slate-100 transition">
-                            Masuk
-                        </a>
-                        <a href="{{ route('register') }}" class="px-4 py-2 rounded-lg text-sm font-semibold bg-teal-600 hover:bg-teal-700 text-white shadow-xs transition">
-                            Daftar Akun
-                        </a>
-                    @endauth
+
+                            <!-- Popover Placed Immediately After Trigger (menu guide) -->
+                            <div id="user-profile-menu" popover="auto" class="dx-menu-popover w-64">
+                                <div class="p-3.5 border-b border-slate-100 bg-slate-50/70 rounded-t-[0.875rem]">
+                                    <p class="text-xs font-bold text-slate-900 truncate">{{ $authUser->displayName() }}</p>
+                                    <p class="text-[11px] font-mono text-slate-500 truncate mt-0.5">{{ $authUser->email }}</p>
+                                    <span class="mt-2 inline-flex items-center px-2 py-0.5 rounded-md text-[11px] font-semibold border {{ $authUser->roleBadgeClasses() }}">
+                                        {{ $authUser->roleBadgeLabel() }}
+                                    </span>
+                                </div>
+                                <div focusgroup="menu nomemory" aria-labelledby="user-profile-trigger" class="p-1.5 space-y-0.5 text-xs font-medium">
+                                    <a href="{{ route('dashboard') }}" class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100 transition">
+                                        <svg aria-hidden="true" class="w-4 h-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+                                        <span>Dashboard Utama</span>
+                                    </a>
+                                    <a href="{{ route('skrining.index') }}#privasi-uupdp" class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100 transition">
+                                        <svg aria-hidden="true" class="w-4 h-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                                        <span>Privasi &amp; Data Saya (UU PDP)</span>
+                                    </a>
+                                    @if($authUser->isAdmin())
+                                        <a href="{{ route('admin.llm.config') }}" class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100 transition">
+                                            <svg aria-hidden="true" class="w-4 h-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"/></svg>
+                                            <span>Konfigurasi API Key AI / LLM</span>
+                                        </a>
+                                    @endif
+                                    <hr class="my-1 border-slate-100">
+                                    <form action="{{ route('logout') }}" method="POST">
+                                        @csrf
+                                        <button type="submit" class="w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-rose-700 hover:bg-rose-50 font-semibold transition">
+                                            <svg aria-hidden="true" class="w-4 h-4 text-rose-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
+                                            <span>Keluar dari Sesi</span>
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
                 </div>
+            </header>
+
+            <!-- Flash Notifications (Polite Live Region) -->
+            <div aria-live="polite" class="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 pt-5 empty:pt-0">
+                @if(session('success'))
+                    <div class="mb-4 rounded-xl bg-emerald-50 border border-emerald-200 px-4 py-3.5 flex items-start gap-3 text-emerald-900 shadow-2xs">
+                        <svg aria-hidden="true" class="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                        <div class="text-sm font-medium">{{ session('success') }}</div>
+                    </div>
+                @endif
+
+                @if(session('warning'))
+                    <div class="mb-4 rounded-xl bg-amber-50 border border-amber-300 px-4 py-3.5 flex items-start gap-3 text-amber-900 shadow-2xs">
+                        <svg aria-hidden="true" class="w-5 h-5 text-amber-600 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+                        </svg>
+                        <div class="text-sm font-medium">{{ session('warning') }}</div>
+                    </div>
+                @endif
+
+                @if($errors->any())
+                    <div role="alert" class="mb-4 rounded-xl bg-rose-50 border border-rose-200 px-4 py-3.5 text-rose-900 shadow-2xs">
+                        <div class="flex items-center gap-2 font-bold text-sm mb-1">
+                            <svg aria-hidden="true" class="w-5 h-5 text-rose-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                            <span>Mohon periksa kembali isian berikut:</span>
+                        </div>
+                        <ul class="list-disc list-inside text-xs space-y-1 text-rose-800">
+                            @foreach($errors->all() as $err)
+                                <li>{{ $err }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
             </div>
 
-            <!-- Mobile Navigation Strip -->
-            @auth
-                <nav aria-label="Menu Mobile" class="flex lg:hidden items-center gap-1.5 overflow-x-auto py-2 border-t border-slate-100 text-xs">
-                    <a href="{{ route('dashboard') }}" class="px-2.5 py-1.5 rounded-md font-semibold whitespace-nowrap {{ request()->routeIs('dashboard') ? 'bg-teal-50 text-teal-700' : 'text-slate-600' }}">Dashboard</a>
-                    <a href="{{ route('skrining.create') }}" class="px-2.5 py-1.5 rounded-md font-semibold whitespace-nowrap bg-teal-600 text-white">+ Skrining</a>
-                    <a href="{{ route('skrining.index') }}" class="px-2.5 py-1.5 rounded-md font-semibold whitespace-nowrap {{ request()->routeIs('skrining.index') ? 'bg-teal-50 text-teal-700' : 'text-slate-600' }}">Riwayat</a>
-                    @if(auth()->user()->isNakes() || auth()->user()->isAdmin())
-                        <a href="{{ route('nakes.ratings.index') }}" class="px-2.5 py-1.5 rounded-md font-semibold whitespace-nowrap {{ request()->routeIs('nakes.*') ? 'bg-indigo-50 text-indigo-700' : 'text-slate-600' }}">Penilaian AI</a>
-                    @endif
-                    @if(auth()->user()->isAdmin())
-                        <a href="{{ route('admin.experiments') }}" class="px-2.5 py-1.5 rounded-md font-semibold whitespace-nowrap {{ request()->routeIs('admin.experiments') ? 'bg-sky-50 text-sky-700' : 'text-slate-600' }}">Eksperimen</a>
-                        <a href="{{ route('admin.llm.config') }}" class="px-2.5 py-1.5 rounded-md font-semibold whitespace-nowrap {{ request()->routeIs('admin.llm.*') ? 'bg-amber-50 text-amber-800' : 'text-slate-600' }}">API Key AI</a>
-                    @endif
-                </nav>
-            @endauth
-        </div>
-    </header>
+            <!-- Main Workspace Content -->
+            <main id="main-content" tabindex="-1" class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
+                @yield('content')
+            </main>
 
-    <!-- Quick Demo Role Switcher Ribbon (Helpful for Thesis Defense / Demo Evaluation) -->
-    <div class="bg-slate-900 text-slate-300 text-xs border-b border-slate-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-1.5 flex flex-wrap items-center justify-between gap-2">
-            <div class="flex items-center gap-2">
-                <span class="inline-block w-2 h-2 rounded-full bg-teal-400"></span>
-                <span><strong>Mode Purwarupa Tesis:</strong> Beralih peran instan untuk simulasi sidang:</span>
-            </div>
-            <div class="flex items-center gap-2">
-                <form action="{{ route('demo.login', 'pengguna') }}" method="POST" class="inline">
-                    @csrf
-                    <button type="submit" class="px-2.5 py-1 rounded bg-slate-800 hover:bg-emerald-700 text-white font-medium transition {{ auth()->check() && auth()->user()->isPengguna() ? 'ring-1 ring-emerald-400 bg-emerald-900/60' : '' }}">
-                        1. Pengguna Umum
-                    </button>
-                </form>
-                <form action="{{ route('demo.login', 'nakes') }}" method="POST" class="inline">
-                    @csrf
-                    <button type="submit" class="px-2.5 py-1 rounded bg-slate-800 hover:bg-sky-700 text-white font-medium transition {{ auth()->check() && auth()->user()->isNakes() ? 'ring-1 ring-sky-400 bg-sky-900/60' : '' }}">
-                        2. Tenaga Medis
-                    </button>
-                </form>
-                <form action="{{ route('demo.login', 'admin') }}" method="POST" class="inline">
-                    @csrf
-                    <button type="submit" class="px-2.5 py-1 rounded bg-slate-800 hover:bg-purple-700 text-white font-medium transition {{ auth()->check() && auth()->user()->isAdmin() ? 'ring-1 ring-purple-400 bg-purple-900/60' : '' }}">
-                        3. Admin & Peneliti (Dashboard Eksperimen & API Key)
-                    </button>
-                </form>
-            </div>
+            <!-- Compact Clinical Workspace Footer -->
+            <footer class="border-t border-slate-200/80 bg-white/70 mt-8">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-slate-500">
+                    <p><strong>DiaXplain</strong> · SPK Klasifikasi Status Diabetes (XGBoost + TreeSHAP + LLM) — Lintang Amarul Fatah (Unisbank Semarang)</p>
+                    <p class="text-slate-400">Bukan Alat Diagnosis Medis · UU PDP</p>
+                </div>
+            </footer>
         </div>
     </div>
 
-    <!-- Flash Notifications (Polite Live Region) -->
-    <div aria-live="polite" class="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 mt-4 empty:mt-0">
-        @if(session('success'))
-            <div class="mb-4 rounded-xl bg-emerald-50 border border-emerald-200 p-4 flex items-start gap-3 text-emerald-900 shadow-2xs">
-                <svg aria-hidden="true" class="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                </svg>
-                <div class="text-sm font-medium">{{ session('success') }}</div>
-            </div>
-        @endif
-
-        @if(session('warning'))
-            <div class="mb-4 rounded-xl bg-amber-50 border border-amber-300 p-4 flex items-start gap-3 text-amber-900 shadow-2xs">
-                <svg aria-hidden="true" class="w-5 h-5 text-amber-600 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
-                </svg>
-                <div class="text-sm font-medium">{{ session('warning') }}</div>
-            </div>
-        @endif
-
-        @if($errors->any())
-            <div role="alert" class="mb-4 rounded-xl bg-red-50 border border-red-200 p-4 text-red-900 shadow-2xs">
-                <div class="flex items-center gap-2 font-bold text-sm mb-1">
-                    <svg aria-hidden="true" class="w-5 h-5 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                    </svg>
-                    <span>Mohon periksa kembali isian berikut:</span>
-                </div>
-                <ul class="list-disc list-inside text-xs space-y-1 text-red-800">
-                    @foreach($errors->all() as $err)
-                        <li>{{ $err }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
-    </div>
-
-    <!-- Main Content Landmark -->
-    <main id="main-content" tabindex="-1" class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
-        @yield('content')
-    </main>
-
-    <!-- Footer Landmark -->
-    <footer class="bg-white border-t border-slate-200 mt-12">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
-            <div>
-                <p class="font-semibold text-slate-700">DiaXplain — Sistem Pendukung Keputusan Klasifikasi Status Diabetes (XGBoost + SHAP + LLM)</p>
-                <p class="mt-0.5">Proyek Tesis Magister: <strong>Lintang Amarul Fatah (NIM 25.01.85.0020)</strong> — Universitas Stikubank (Unisbank) Semarang.</p>
-            </div>
-            <div class="flex items-center gap-4">
-                <a href="{{ route('about') }}" class="text-teal-700 hover:underline font-medium">Tentang Model & Keterbatasan</a>
-                <span class="text-slate-300">|</span>
-                <span>Bukan Alat Diagnosis Medis</span>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Deferred Validation ARIA Synchronization & Fallback (validate-input-after-interaction) -->
-    <script>
-        (() => {
-            const dirtyState = new WeakMap();
-            const syncAriaAndFallback = (el) => {
-                if (!el || typeof el.checkValidity !== 'function') return;
-                const isInvalid = el.matches?.(':user-invalid') || !el.checkValidity();
-                el.setAttribute('aria-invalid', isInvalid ? 'true' : 'false');
-                if (!CSS.supports('selector(:user-invalid)')) {
-                    el.classList.toggle('user-invalid-fallback', !el.checkValidity());
-                }
-            };
-
-            document.addEventListener('blur', (e) => {
-                const input = e.target;
-                if (!input || !input.checkValidity) return;
-                const st = dirtyState.get(input) || { interacted: false };
-                if (st.interacted) syncAriaAndFallback(input);
-            }, true);
-
-            document.addEventListener('input', (e) => {
-                const input = e.target;
-                if (!input || !input.checkValidity) return;
-                dirtyState.set(input, { interacted: true });
-                if (input.getAttribute('aria-invalid') === 'true') {
-                    syncAriaAndFallback(input);
-                }
-            });
-        })();
-    </script>
+    @include('layouts.partials.demo-switcher')
+    @include('layouts.partials.core-scripts')
     @stack('scripts')
 </body>
 </html>
-

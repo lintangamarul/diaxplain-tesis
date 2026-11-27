@@ -1,58 +1,48 @@
 @extends('layouts.app')
 
 @section('title', 'Log Audit Keamanan & Privasi')
+@section('page_title', 'Tata Kelola · Log Audit')
 
 @section('content')
 <div class="space-y-6">
-    <!-- Admin Sub-navigation -->
-    <div class="flex flex-wrap items-center justify-between gap-4 bg-white rounded-2xl border border-slate-200/80 px-5 py-3 shadow-sm">
-        <div class="flex flex-wrap items-center gap-2 text-xs font-bold">
-            <a href="{{ route('admin.experiments') }}" class="px-3 py-1.5 rounded-xl text-slate-600 hover:bg-slate-100">Dasbor Eksperimen (RM1–RM6)</a>
-            <a href="{{ route('admin.llm.config') }}" class="px-3 py-1.5 rounded-xl text-slate-600 hover:bg-slate-100">API Key Layanan AI (LLM)</a>
-            <a href="{{ route('admin.models') }}" class="px-3 py-1.5 rounded-xl text-slate-600 hover:bg-slate-100">Registri Model</a>
-            <a href="{{ route('admin.users') }}" class="px-3 py-1.5 rounded-xl text-slate-600 hover:bg-slate-100">Manajemen Pengguna</a>
-            <a href="{{ route('admin.audit') }}" class="px-3 py-1.5 rounded-xl bg-teal-50 text-teal-800 border border-teal-200">Log Audit</a>
-        </div>
-    </div>
+    @include('admin.partials.governance-tabs')
 
-    <div class="bg-white rounded-3xl border border-slate-200/80 p-6 sm:p-8 shadow-sm">
-        <div class="mb-6">
-            <h1 class="text-2xl font-extrabold text-slate-900">Jejak Audit Aktivitas & Keamanan Sistem</h1>
-            <p class="text-xs text-slate-500 mt-1">Pencatatan otomatis aktivitas sensitif (login, pembuatan skrining, perubahan API key, penilaian pakar, dan ekspor data).</p>
+    <div class="bg-white rounded-2xl border border-slate-200/90 shadow-2xs overflow-hidden">
+        <div class="px-6 py-5 border-b border-slate-200/80">
+            <h1 class="text-xl font-extrabold text-slate-900">Jejak Audit Aktivitas &amp; Keamanan Sistem</h1>
+            <p class="text-xs text-slate-500 mt-0.5">Pencatatan otomatis aktivitas sensitif (login, pembuatan skrining, perubahan API key, penilaian pakar, dan ekspor data).</p>
         </div>
 
-        <div class="overflow-x-auto">
-            <table class="w-full text-left border-collapse text-xs">
-                <thead>
-                    <tr class="border-b border-slate-200 text-slate-500 uppercase bg-slate-50/80">
-                        <th class="py-3 px-3">Waktu</th>
-                        <th class="py-3 px-3">Pengguna</th>
-                        <th class="py-3 px-3">Aksi</th>
-                        <th class="py-3 px-3">Target</th>
-                        <th class="py-3 px-3">Alamat IP</th>
-                        <th class="py-3 px-3">Metadata</th>
+        <div class="table-wrapper">
+            <table class="text-left text-xs">
+                <thead class="bg-slate-50 border-b border-slate-200 text-slate-600 font-semibold uppercase">
+                    <tr>
+                        <th scope="col" class="py-3 px-4">Waktu</th>
+                        <th scope="col" class="py-3 px-4">Pengguna</th>
+                        <th scope="col" class="py-3 px-4">Aksi</th>
+                        <th scope="col" class="py-3 px-4">Target</th>
+                        <th scope="col" class="py-3 px-4">Metadata</th>
                     </tr>
                 </thead>
-                <tbody class="divide-y divide-slate-200/60">
+                <tbody class="divide-y divide-slate-200/70">
                     @forelse($logs as $log)
-                        <tr>
-                            <td class="py-3 px-3 text-slate-500 font-mono">{{ $log->created_at?->format('d M Y H:i:s') }}</td>
-                            <td class="py-3 px-3 font-semibold text-slate-800">{{ $log->user?->name ?? 'Sistem / Tamu' }}</td>
-                            <td class="py-3 px-3 font-mono font-bold text-teal-800">{{ $log->action }}</td>
-                            <td class="py-3 px-3 font-mono text-slate-700">{{ $log->target ?? '-' }}</td>
-                            <td class="py-3 px-3 font-mono text-slate-500">{{ $log->ip_address ?? '-' }}</td>
-                            <td class="py-3 px-3 font-mono text-[11px] text-slate-500">{{ $log->metadata_json ? json_encode($log->metadata_json) : '-' }}</td>
+                        <tr class="hover:bg-slate-50/80">
+                            <td class="py-3 px-4 text-slate-500 font-mono whitespace-nowrap">{{ $log->created_at?->format('d M Y H:i:s') }}</td>
+                            <th scope="row" class="py-3 px-4 font-semibold text-slate-800 whitespace-nowrap">{{ $log->user?->displayName() ?? 'Sistem / Tamu' }}</th>
+                            <td class="py-3 px-4 font-mono font-bold text-teal-800 whitespace-nowrap">{{ $log->aksi }}</td>
+                            <td class="py-3 px-4 font-mono text-slate-700 whitespace-nowrap">{{ $log->target ?? '-' }}</td>
+                            <td class="py-3 px-4 font-mono text-[11px] text-slate-500 max-w-md truncate">{{ !empty($log->meta) ? json_encode($log->meta) : '-' }}</td>
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="6" class="py-8 text-center text-slate-500">Belum ada catatan audit.</td>
+                            <td colspan="5" class="py-8 text-center text-slate-500">Belum ada catatan audit.</td>
                         </tr>
                     @endforelse
                 </tbody>
             </table>
         </div>
 
-        <div class="mt-4">
+        <div class="px-5 py-3.5 border-t border-slate-200/80 bg-slate-50/40">
             {{ $logs->links() }}
         </div>
     </div>
