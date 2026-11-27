@@ -1,0 +1,61 @@
+case_id,true_label,predicted_label,confidence_note,validation_passed,label_consistency,feature_whitelist,direction_accuracy,numeric_consistency,forbidden_phrases_detected,hallucinated_feature_count,top_k_coverage,retries,used_fallback,provider,latency_ms
+eval_c0_01,No Diabetes,No Diabetes,tinggi,True,True,True,True,True,False,0,1.0,0,True,template_fallback,1
+eval_c0_02,No Diabetes,No Diabetes,tinggi,True,True,True,True,True,False,0,1.0,0,True,template_fallback,0
+eval_c0_03,No Diabetes,No Diabetes,tinggi,True,True,True,True,True,False,0,1.0,0,True,template_fallback,0
+eval_c0_04,No Diabetes,No Diabetes,tinggi,True,True,True,True,True,False,0,1.0,0,True,template_fallback,0
+eval_c0_05,No Diabetes,No Diabetes,tinggi,True,True,True,True,True,False,0,1.0,0,True,template_fallback,0
+eval_c0_06,No Diabetes,Diabetes,rendah,True,True,True,True,True,False,0,1.0,0,True,template_fallback,0
+eval_c0_07,No Diabetes,No Diabetes,tinggi,True,True,True,True,True,False,0,1.0,0,True,template_fallback,0
+eval_c0_08,No Diabetes,No Diabetes,tinggi,True,True,True,True,True,False,0,1.0,0,True,template_fallback,0
+eval_c0_09,No Diabetes,No Diabetes,tinggi,True,True,True,True,True,False,0,1.0,0,True,template_fallback,0
+eval_c0_10,No Diabetes,Diabetes,tinggi,True,True,True,True,True,False,0,1.0,0,True,template_fallback,0
+eval_c0_11,No Diabetes,No Diabetes,tinggi,True,True,True,True,True,False,0,1.0,0,True,template_fallback,0
+eval_c0_12,No Diabetes,No Diabetes,tinggi,True,True,True,True,True,False,0,1.0,0,True,template_fallback,0
+eval_c0_13,No Diabetes,No Diabetes,tinggi,True,True,True,True,True,False,0,1.0,0,True,template_fallback,0
+eval_c0_14,No Diabetes,No Diabetes,tinggi,True,True,True,True,True,False,0,1.0,0,True,template_fallback,0
+eval_c0_15,No Diabetes,No Diabetes,tinggi,True,True,True,True,True,False,0,1.0,0,True,template_fallback,0
+eval_c0_16,No Diabetes,Diabetes,rendah,True,True,True,True,True,False,0,1.0,0,True,template_fallback,0
+eval_c0_17,No Diabetes,No Diabetes,tinggi,True,True,True,True,True,False,0,1.0,0,True,template_fallback,0
+eval_c0_18,No Diabetes,No Diabetes,tinggi,True,True,True,True,True,False,0,1.0,0,True,template_fallback,0
+eval_c0_19,No Diabetes,No Diabetes,tinggi,True,True,True,True,True,False,0,1.0,0,True,template_fallback,0
+eval_c0_20,No Diabetes,No Diabetes,rendah,True,True,True,True,True,False,0,1.0,0,True,template_fallback,0
+eval_c1_01,Prediabetes,Diabetes,tinggi,True,True,True,True,True,False,0,1.0,0,True,template_fallback,0
+eval_c1_02,Prediabetes,No Diabetes,tinggi,True,True,True,True,True,False,0,1.0,0,True,template_fallback,0
+eval_c1_03,Prediabetes,Prediabetes,sedang,True,True,True,True,True,False,0,1.0,0,True,template_fallback,0
+eval_c1_04,Prediabetes,No Diabetes,tinggi,True,True,True,True,True,False,0,1.0,0,True,template_fallback,0
+eval_c1_05,Prediabetes,No Diabetes,sedang,True,True,True,True,True,False,0,1.0,0,True,template_fallback,0
+eval_c1_06,Prediabetes,No Diabetes,tinggi,True,True,True,True,True,False,0,1.0,0,True,template_fallback,0
+eval_c1_07,Prediabetes,Diabetes,tinggi,True,True,True,True,True,False,0,1.0,0,True,template_fallback,0
+eval_c1_08,Prediabetes,Diabetes,tinggi,True,True,True,True,True,False,0,1.0,0,True,template_fallback,0
+eval_c1_09,Prediabetes,No Diabetes,sedang,True,True,True,True,True,False,0,1.0,0,True,template_fallback,0
+eval_c1_10,Prediabetes,Diabetes,tinggi,True,True,True,True,True,False,0,1.0,0,True,template_fallback,0
+eval_c1_11,Prediabetes,Diabetes,tinggi,True,True,True,True,True,False,0,1.0,0,True,template_fallback,0
+eval_c1_12,Prediabetes,Diabetes,sedang,True,True,True,True,True,False,0,1.0,0,True,template_fallback,0
+eval_c1_13,Prediabetes,No Diabetes,rendah,True,True,True,True,True,False,0,1.0,0,True,template_fallback,0
+eval_c1_14,Prediabetes,No Diabetes,tinggi,True,True,True,True,True,False,0,1.0,0,True,template_fallback,0
+eval_c1_15,Prediabetes,No Diabetes,sedang,True,True,True,True,True,False,0,1.0,0,True,template_fallback,0
+eval_c1_16,Prediabetes,No Diabetes,tinggi,True,True,True,True,True,False,0,1.0,0,True,template_fallback,0
+eval_c1_17,Prediabetes,No Diabetes,sedang,True,True,True,True,True,False,0,1.0,0,True,template_fallback,0
+eval_c1_18,Prediabetes,Diabetes,rendah,True,True,True,True,True,False,0,1.0,0,True,template_fallback,0
+eval_c1_19,Prediabetes,Diabetes,tinggi,True,True,True,True,True,False,0,1.0,0,True,template_fallback,0
+eval_c1_20,Prediabetes,Diabetes,tinggi,True,True,True,True,True,False,0,1.0,0,True,template_fallback,0
+eval_c2_01,Diabetes,No Diabetes,tinggi,True,True,True,True,True,False,0,1.0,0,True,template_fallback,0
+eval_c2_02,Diabetes,Diabetes,tinggi,True,True,True,True,True,False,0,1.0,0,True,template_fallback,0
+eval_c2_03,Diabetes,No Diabetes,tinggi,True,True,True,True,True,False,0,1.0,0,True,template_fallback,0
+eval_c2_04,Diabetes,Diabetes,tinggi,True,True,True,True,True,False,0,1.0,0,True,template_fallback,0
+eval_c2_05,Diabetes,Diabetes,rendah,True,True,True,True,True,False,0,1.0,0,True,template_fallback,0
+eval_c2_06,Diabetes,No Diabetes,tinggi,True,True,True,True,True,False,0,1.0,0,True,template_fallback,0
+eval_c2_07,Diabetes,Diabetes,tinggi,True,True,True,True,True,False,0,1.0,0,True,template_fallback,0
+eval_c2_08,Diabetes,Diabetes,sedang,True,True,True,True,True,False,0,1.0,0,True,template_fallback,0
+eval_c2_09,Diabetes,Diabetes,rendah,True,True,True,True,True,False,0,1.0,0,True,template_fallback,0
+eval_c2_10,Diabetes,Diabetes,rendah,True,True,True,True,True,False,0,1.0,0,True,template_fallback,0
+eval_c2_11,Diabetes,Diabetes,sedang,True,True,True,True,True,False,0,1.0,0,True,template_fallback,0
+eval_c2_12,Diabetes,Prediabetes,rendah,True,True,True,True,True,False,0,1.0,0,True,template_fallback,0
+eval_c2_13,Diabetes,Diabetes,rendah,True,True,True,True,True,False,0,1.0,0,True,template_fallback,0
+eval_c2_14,Diabetes,Diabetes,rendah,True,True,True,True,True,False,0,1.0,0,True,template_fallback,0
+eval_c2_15,Diabetes,Diabetes,sedang,True,True,True,True,True,False,0,1.0,0,True,template_fallback,0
+eval_c2_16,Diabetes,Diabetes,sedang,True,True,True,True,True,False,0,1.0,0,True,template_fallback,0
+eval_c2_17,Diabetes,Diabetes,rendah,True,True,True,True,True,False,0,1.0,0,True,template_fallback,0
+eval_c2_18,Diabetes,No Diabetes,sedang,True,True,True,True,True,False,0,1.0,0,True,template_fallback,0
+eval_c2_19,Diabetes,No Diabetes,sedang,True,True,True,True,True,False,0,1.0,0,True,template_fallback,0
+eval_c2_20,Diabetes,Diabetes,tinggi,True,True,True,True,True,False,0,1.0,0,True,template_fallback,0

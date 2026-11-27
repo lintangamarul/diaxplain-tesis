@@ -1,0 +1,12 @@
+{
+  "min": 13.0,
+  "p01": 13.0,
+  "q25": 24.0,
+  "median": 28.0,
+  "q75": 33.0,
+  "p99": 43.0,
+  "max": 59.0,
+  "iqr": 9.0,
+  "above_iqr_upper_fence_count": 35,
+  "decision": "Dipertahankan pada pelatihan karena algoritma pohon keputusan (XGBoost) invarian terhadap transformasi monotonik dan tahan terhadap outlier; pembatasan 12–98 diterapkan pada validasi form aplikasi."
+}

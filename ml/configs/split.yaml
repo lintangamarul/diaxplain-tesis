@@ -1,0 +1,6 @@
+seed: 42
+test_size: 0.2
+n_splits: 5
+dataset_filename: "diabetes_012_health_indicators_BRFSS2015.csv"
+target_col: "Diabetes_012"
+

@@ -1,0 +1,7 @@
+code: E0
+name: Baseline XGBoost (Default)
+technique: baseline_default
+imbalance_strategy: none
+xgb_params:
+  default: true
+seed: 42

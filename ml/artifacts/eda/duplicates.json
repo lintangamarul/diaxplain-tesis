@@ -1,0 +1,11 @@
+{
+  "total_rows": 15450,
+  "duplicate_rows": 450,
+  "duplicate_percentage": 2.913,
+  "unique_rows": 15000,
+  "duplicates_by_class": {
+    "No Diabetes": 389,
+    "Prediabetes": 4,
+    "Diabetes": 57
+  }
+}

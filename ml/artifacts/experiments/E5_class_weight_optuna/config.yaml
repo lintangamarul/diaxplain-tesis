@@ -1,0 +1,15 @@
+code: E5
+name: XGBoost + Class Weight + Optuna HPO
+technique: class_weight+optuna
+imbalance_strategy: class_weight
+xgb_params:
+  n_estimators: 320
+  learning_rate: 0.021011958648994657
+  max_depth: 8
+  min_child_weight: 10
+  subsample: 0.7243186887373967
+  colsample_bytree: 0.7136387385224853
+  gamma: 0.5502135295603015
+  reg_alpha: 0.0114258145168277
+  reg_lambda: 0.08730885649333642
+seed: 42

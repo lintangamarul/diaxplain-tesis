@@ -1,0 +1,17 @@
+{
+  "code_to_label": {
+    "0": "No Diabetes",
+    "1": "Prediabetes",
+    "2": "Diabetes"
+  },
+  "code_to_display_id": {
+    "0": "Tidak Diabetes",
+    "1": "Prediabetes",
+    "2": "Diabetes"
+  },
+  "label_to_code": {
+    "No Diabetes": 0,
+    "Prediabetes": 1,
+    "Diabetes": 2
+  }
+}

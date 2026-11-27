@@ -1,0 +1,14 @@
+model_version: xgb-v1.0.0
+experiment_code: E6
+technique: smote+optuna
+params:
+  n_estimators: 280
+  learning_rate: 0.08278777187079395
+  max_depth: 3
+  min_child_weight: 8
+  subsample: 0.7096834432905521
+  colsample_bytree: 0.6727680575448478
+  gamma: 2.84665661176
+  reg_alpha: 2.2783459357466143
+  reg_lambda: 0.9777718780862648
+seed: 42

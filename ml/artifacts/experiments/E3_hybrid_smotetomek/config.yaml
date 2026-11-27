@@ -1,0 +1,7 @@
+code: E3
+name: XGBoost + Hybrid Sampling (SMOTETomek)
+technique: hybrid_smotetomek
+imbalance_strategy: hybrid_smotetomek
+xgb_params:
+  default: true
+seed: 42

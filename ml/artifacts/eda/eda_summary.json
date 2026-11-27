@@ -1,0 +1,52 @@
+{
+  "dataset_sha256": "55200359456b44609ef06e2ef1c622ea8c910a099f489c597ed6c5e0a7408b26",
+  "source_type": "brfss_calibrated_bootstrap",
+  "total_rows": 15450,
+  "total_features": 21,
+  "class_distribution": [
+    {
+      "class_code": 0,
+      "label": "No Diabetes",
+      "label_id": "Tidak Diabetes",
+      "count": 13063,
+      "percentage": 84.55
+    },
+    {
+      "class_code": 1,
+      "label": "Prediabetes",
+      "label_id": "Prediabetes",
+      "count": 295,
+      "percentage": 1.909
+    },
+    {
+      "class_code": 2,
+      "label": "Diabetes",
+      "label_id": "Diabetes",
+      "count": 2092,
+      "percentage": 13.54
+    }
+  ],
+  "duplicates": {
+    "total_rows": 15450,
+    "duplicate_rows": 450,
+    "duplicate_percentage": 2.913,
+    "unique_rows": 15000,
+    "duplicates_by_class": {
+      "No Diabetes": 389,
+      "Prediabetes": 4,
+      "Diabetes": 57
+    }
+  },
+  "outliers_bmi": {
+    "min": 13.0,
+    "p01": 13.0,
+    "q25": 24.0,
+    "median": 28.0,
+    "q75": 33.0,
+    "p99": 43.0,
+    "max": 59.0,
+    "iqr": 9.0,
+    "above_iqr_upper_fence_count": 35,
+    "decision": "Dipertahankan pada pelatihan karena algoritma pohon keputusan (XGBoost) invarian terhadap transformasi monotonik dan tahan terhadap outlier; pembatasan 12–98 diterapkan pada validasi form aplikasi."
+  }
+}

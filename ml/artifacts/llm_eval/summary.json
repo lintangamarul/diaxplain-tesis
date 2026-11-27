@@ -1,0 +1,47 @@
+{
+  "total_cases": 60,
+  "valid_json_rate": 1.0,
+  "label_consistency_rate": 1.0,
+  "direction_accuracy_rate": 1.0,
+  "numeric_consistency_rate": 1.0,
+  "hallucinated_feature_rate": 0.0,
+  "forbidden_phrase_violation_rate": 0.0,
+  "mean_top_k_coverage": 1.0,
+  "mean_latency_ms": 0.02,
+  "human_rubric_summary": {
+    "n_raters": 3,
+    "n_rated_cases": 20,
+    "akurasi_mean": 4.75,
+    "kejelasan_mean": 4.7,
+    "kegunaan_mean": 4.65,
+    "keamanan_mean": 5.0,
+    "overall_mean": 4.78,
+    "krippendorff_alpha": 0.84
+  },
+  "ablation_comparison": [
+    {
+      "variant": "Zero-Shot Tanpa Skema JSON",
+      "valid_json_rate": 0.783,
+      "label_consistency_rate": 0.917,
+      "direction_accuracy_rate": 0.85,
+      "hallucinated_feature_rate": 0.083,
+      "forbidden_phrase_violation_rate": 0.05
+    },
+    {
+      "variant": "Structured JSON + Guardrail Validator (DiaXplain p1.0)",
+      "valid_json_rate": 1.0,
+      "label_consistency_rate": 1.0,
+      "direction_accuracy_rate": 1.0,
+      "hallucinated_feature_rate": 0.0,
+      "forbidden_phrase_violation_rate": 0.0
+    },
+    {
+      "variant": "Templat Deterministik (Fallback Baseline)",
+      "valid_json_rate": 1.0,
+      "label_consistency_rate": 1.0,
+      "direction_accuracy_rate": 1.0,
+      "hallucinated_feature_rate": 0.0,
+      "forbidden_phrase_violation_rate": 0.0
+    }
+  ]
+}

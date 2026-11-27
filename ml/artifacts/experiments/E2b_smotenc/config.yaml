@@ -1,0 +1,7 @@
+code: E2b
+name: XGBoost + SMOTENC (Categorical-Aware)
+technique: smotenc
+imbalance_strategy: smotenc
+xgb_params:
+  default: true
+seed: 42

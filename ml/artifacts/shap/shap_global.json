@@ -1,0 +1,227 @@
+{
+  "n_samples": 800,
+  "base_values": {
+    "No Diabetes": 0.7635,
+    "Prediabetes": -0.5397,
+    "Diabetes": -0.2178
+  },
+  "ranking": [
+    {
+      "feature": "GenHlth",
+      "label_id": "Penilaian Kesehatan Umum Mandiri",
+      "group": "kondisi_kesehatan",
+      "mean_abs_shap_overall": 0.3127,
+      "mean_abs_shap_no_diabetes": 0.4084,
+      "mean_abs_shap_prediabetes": 0.2139,
+      "mean_abs_shap_diabetes": 0.3159,
+      "rank": 1
+    },
+    {
+      "feature": "PhysHlth",
+      "label_id": "Hari Kesehatan Fisik Kurang Baik (0–30 Hari)",
+      "group": "kondisi_kesehatan",
+      "mean_abs_shap_overall": 0.2567,
+      "mean_abs_shap_no_diabetes": 0.2573,
+      "mean_abs_shap_prediabetes": 0.155,
+      "mean_abs_shap_diabetes": 0.3577,
+      "rank": 2
+    },
+    {
+      "feature": "HighBP",
+      "label_id": "Tekanan Darah Tinggi (Hipertensi)",
+      "group": "kondisi_kesehatan",
+      "mean_abs_shap_overall": 0.2328,
+      "mean_abs_shap_no_diabetes": 0.3932,
+      "mean_abs_shap_prediabetes": 0.0499,
+      "mean_abs_shap_diabetes": 0.2551,
+      "rank": 3
+    },
+    {
+      "feature": "BMI",
+      "label_id": "Indeks Massa Tubuh (BMI)",
+      "group": "fisik_demografi",
+      "mean_abs_shap_overall": 0.2134,
+      "mean_abs_shap_no_diabetes": 0.3178,
+      "mean_abs_shap_prediabetes": 0.1348,
+      "mean_abs_shap_diabetes": 0.1876,
+      "rank": 4
+    },
+    {
+      "feature": "HighChol",
+      "label_id": "Kolesterol Tinggi",
+      "group": "kondisi_kesehatan",
+      "mean_abs_shap_overall": 0.2003,
+      "mean_abs_shap_no_diabetes": 0.3659,
+      "mean_abs_shap_prediabetes": 0.0692,
+      "mean_abs_shap_diabetes": 0.1657,
+      "rank": 5
+    },
+    {
+      "feature": "Income",
+      "label_id": "Tingkat Pendapatan Rumah Tangga (Skala Relatif 1–8)",
+      "group": "sosial_ekonomi",
+      "mean_abs_shap_overall": 0.1923,
+      "mean_abs_shap_no_diabetes": 0.2786,
+      "mean_abs_shap_prediabetes": 0.1606,
+      "mean_abs_shap_diabetes": 0.1377,
+      "rank": 6
+    },
+    {
+      "feature": "Age",
+      "label_id": "Kelompok Usia",
+      "group": "fisik_demografi",
+      "mean_abs_shap_overall": 0.1587,
+      "mean_abs_shap_no_diabetes": 0.1652,
+      "mean_abs_shap_prediabetes": 0.1065,
+      "mean_abs_shap_diabetes": 0.2045,
+      "rank": 7
+    },
+    {
+      "feature": "Education",
+      "label_id": "Tingkat Pendidikan Terakhir",
+      "group": "sosial_ekonomi",
+      "mean_abs_shap_overall": 0.151,
+      "mean_abs_shap_no_diabetes": 0.1923,
+      "mean_abs_shap_prediabetes": 0.182,
+      "mean_abs_shap_diabetes": 0.0788,
+      "rank": 8
+    },
+    {
+      "feature": "DiffWalk",
+      "label_id": "Kesulitan Serius Berjalan / Naik Tangga",
+      "group": "kondisi_kesehatan",
+      "mean_abs_shap_overall": 0.1354,
+      "mean_abs_shap_no_diabetes": 0.2216,
+      "mean_abs_shap_prediabetes": 0.0351,
+      "mean_abs_shap_diabetes": 0.1494,
+      "rank": 9
+    },
+    {
+      "feature": "MentHlth",
+      "label_id": "Hari Kesehatan Mental Kurang Baik (0–30 Hari)",
+      "group": "kondisi_kesehatan",
+      "mean_abs_shap_overall": 0.1314,
+      "mean_abs_shap_no_diabetes": 0.1732,
+      "mean_abs_shap_prediabetes": 0.1126,
+      "mean_abs_shap_diabetes": 0.1085,
+      "rank": 10
+    },
+    {
+      "feature": "PhysActivity",
+      "label_id": "Aktivitas Fisik / Olahraga (30 Hari Terakhir)",
+      "group": "gaya_hidup",
+      "mean_abs_shap_overall": 0.0949,
+      "mean_abs_shap_no_diabetes": 0.105,
+      "mean_abs_shap_prediabetes": 0.018,
+      "mean_abs_shap_diabetes": 0.1616,
+      "rank": 11
+    },
+    {
+      "feature": "HeartDiseaseorAttack",
+      "label_id": "Penyakit Jantung Koroner / Serangan Jantung",
+      "group": "kondisi_kesehatan",
+      "mean_abs_shap_overall": 0.0798,
+      "mean_abs_shap_no_diabetes": 0.0893,
+      "mean_abs_shap_prediabetes": 0.0013,
+      "mean_abs_shap_diabetes": 0.1489,
+      "rank": 12
+    },
+    {
+      "feature": "Fruits",
+      "label_id": "Konsumsi Buah Harian (≥ 1 Kali/Hari)",
+      "group": "gaya_hidup",
+      "mean_abs_shap_overall": 0.0727,
+      "mean_abs_shap_no_diabetes": 0.045,
+      "mean_abs_shap_prediabetes": 0.1512,
+      "mean_abs_shap_diabetes": 0.0221,
+      "rank": 13
+    },
+    {
+      "feature": "Smoker",
+      "label_id": "Riwayat Merokok (≥ 100 Batang Seumur Hidup)",
+      "group": "gaya_hidup",
+      "mean_abs_shap_overall": 0.0364,
+      "mean_abs_shap_no_diabetes": 0.0517,
+      "mean_abs_shap_prediabetes": 0.0264,
+      "mean_abs_shap_diabetes": 0.0311,
+      "rank": 14
+    },
+    {
+      "feature": "Stroke",
+      "label_id": "Riwayat Stroke",
+      "group": "kondisi_kesehatan",
+      "mean_abs_shap_overall": 0.0288,
+      "mean_abs_shap_no_diabetes": 0.0164,
+      "mean_abs_shap_prediabetes": 0.0,
+      "mean_abs_shap_diabetes": 0.0701,
+      "rank": 15
+    },
+    {
+      "feature": "Sex",
+      "label_id": "Jenis Kelamin Biologis",
+      "group": "fisik_demografi",
+      "mean_abs_shap_overall": 0.0261,
+      "mean_abs_shap_no_diabetes": 0.0362,
+      "mean_abs_shap_prediabetes": 0.0362,
+      "mean_abs_shap_diabetes": 0.0059,
+      "rank": 16
+    },
+    {
+      "feature": "Veggies",
+      "label_id": "Konsumsi Sayur Harian (≥ 1 Kali/Hari)",
+      "group": "gaya_hidup",
+      "mean_abs_shap_overall": 0.0231,
+      "mean_abs_shap_no_diabetes": 0.0182,
+      "mean_abs_shap_prediabetes": 0.0032,
+      "mean_abs_shap_diabetes": 0.048,
+      "rank": 17
+    },
+    {
+      "feature": "HvyAlcoholConsump",
+      "label_id": "Konsumsi Alkohol Berat",
+      "group": "gaya_hidup",
+      "mean_abs_shap_overall": 0.0217,
+      "mean_abs_shap_no_diabetes": 0.0141,
+      "mean_abs_shap_prediabetes": 0.0008,
+      "mean_abs_shap_diabetes": 0.0502,
+      "rank": 18
+    },
+    {
+      "feature": "NoDocbcCost",
+      "label_id": "Kendala Biaya Berobat ke Dokter (12 Bulan Terakhir)",
+      "group": "akses_layanan",
+      "mean_abs_shap_overall": 0.0142,
+      "mean_abs_shap_no_diabetes": 0.0143,
+      "mean_abs_shap_prediabetes": 0.0242,
+      "mean_abs_shap_diabetes": 0.0041,
+      "rank": 19
+    },
+    {
+      "feature": "CholCheck",
+      "label_id": "Pemeriksaan Kolesterol (5 Tahun Terakhir)",
+      "group": "akses_layanan",
+      "mean_abs_shap_overall": 0.013,
+      "mean_abs_shap_no_diabetes": 0.0278,
+      "mean_abs_shap_prediabetes": 0.0051,
+      "mean_abs_shap_diabetes": 0.006,
+      "rank": 20
+    },
+    {
+      "feature": "AnyHealthcare",
+      "label_id": "Kepemilikan Jaminan Kesehatan (BPJS / Asuransi)",
+      "group": "akses_layanan",
+      "mean_abs_shap_overall": 0.0058,
+      "mean_abs_shap_no_diabetes": 0.0108,
+      "mean_abs_shap_prediabetes": 0.0062,
+      "mean_abs_shap_diabetes": 0.0005,
+      "rank": 21
+    }
+  ],
+  "top_5_features": [
+    "GenHlth",
+    "PhysHlth",
+    "HighBP",
+    "BMI",
+    "HighChol"
+  ]
+}

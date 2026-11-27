@@ -1,0 +1,15 @@
+code: E4
+name: XGBoost + Optuna HPO (Tanpa Imbalance Handling)
+technique: optuna_only
+imbalance_strategy: none
+xgb_params:
+  n_estimators: 200
+  learning_rate: 0.19547756477892086
+  max_depth: 7
+  min_child_weight: 8
+  subsample: 0.7046065241548528
+  colsample_bytree: 0.7045980821176709
+  gamma: 0.17425083650459838
+  reg_alpha: 1.0275417738969415
+  reg_lambda: 0.16730402817820234
+seed: 42

@@ -1,0 +1,8 @@
+minority_class: 1
+minority_class_name: "Prediabetes"
+f1_minority_ratio_threshold: 0.5
+recall_gap_threshold: 0.30
+acc_macro_f1_gap_threshold: 0.15
+train_cv_gap_threshold: 0.05
+cv_sd_threshold: 0.02
+

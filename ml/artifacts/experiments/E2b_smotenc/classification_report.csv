@@ -1,0 +1,4 @@
+class,class_code,label_id,precision,recall,f1,roc_auc_ovr,support
+No Diabetes,0,Tidak Diabetes,0.9317,0.9556,0.9435,0.9184,2613
+Prediabetes,1,Prediabetes,0.069,0.0339,0.0455,0.6712,59
+Diabetes,2,Diabetes,0.664,0.6053,0.6333,0.9134,418

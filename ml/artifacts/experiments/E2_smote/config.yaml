@@ -1,0 +1,7 @@
+code: E2
+name: XGBoost + SMOTE (Partial Strategy)
+technique: smote
+imbalance_strategy: smote
+xgb_params:
+  default: true
+seed: 42

@@ -1,0 +1,94 @@
+{
+  "gate_passed_for_improvement": true,
+  "thresholds_used": {
+    "f1_minority_ratio_threshold": 0.5,
+    "recall_gap_threshold": 0.3,
+    "acc_macro_f1_gap_threshold": 0.15,
+    "train_cv_gap_threshold": 0.05,
+    "cv_sd_threshold": 0.02
+  },
+  "findings": [
+    {
+      "rule_id": "W1_MINORITY_CLASS_BIAS",
+      "triggered": true,
+      "metric_values": {
+        "prediabetes_f1": 0.0323,
+        "prediabetes_recall": 0.0169,
+        "other_classes_f1_mean": 0.795,
+        "f1_minority_ratio": 0.0406,
+        "max_recall_gap": 0.9517
+      },
+      "threshold": {
+        "f1_minority_ratio_min": 0.5,
+        "recall_gap_max": 0.3
+      },
+      "diagnosis": "Model baseline mengalami bias ekstrem ke kelas mayoritas: F1 Prediabetes (0.0323) dan Recall Prediabetes (0.0169) sangat rendah dibanding No Diabetes (0.9686).",
+      "recommended_action": "Class Imbalance Handling (Class Weight, SMOTE, SMOTENC, SMOTETomek/SMOTEENN)"
+    },
+    {
+      "rule_id": "W2_ACCURACY_PARADOX",
+      "triggered": true,
+      "metric_values": {
+        "accuracy": 0.9,
+        "macro_f1": 0.5407,
+        "accuracy_minus_macro_f1": 0.3593
+      },
+      "threshold": {
+        "acc_macro_f1_gap_max": 0.15
+      },
+      "diagnosis": "Terjadi Accuracy Paradox: Accuracy keseluruhan tinggi (0.9000), namun Macro-F1 rendah (0.5407, selisih 0.3593 > 0.15).",
+      "recommended_action": "Gunakan Macro-F1 & F1/Recall Prediabetes sebagai kriteria seleksi utama serta terapkan penanganan class imbalance."
+    },
+    {
+      "rule_id": "W3_HYPERPARAMETER_SUBOPTIMALITY",
+      "triggered": true,
+      "metric_values": {
+        "train_macro_f1": 0.9258,
+        "cv_macro_f1_mean": 0.531,
+        "train_minus_cv_gap": 0.3948,
+        "cv_macro_f1_std": 0.0062
+      },
+      "threshold": {
+        "train_cv_gap_max": 0.05,
+        "cv_sd_max": 0.02
+      },
+      "diagnosis": "Konfigurasi hyperparameter default XGBoost belum optimal untuk batas keputusan multikelas (selisih Train–CV Macro-F1 = 0.3948).",
+      "recommended_action": "Hyperparameter Optimization menggunakan Optuna (TPE Sampler) dengan objektif Macro-F1 CV."
+    }
+  ],
+  "top_misclassifications": [
+    {
+      "actual": "Prediabetes",
+      "predicted": "No Diabetes",
+      "count": 31,
+      "row_percentage": 52.54
+    },
+    {
+      "actual": "Prediabetes",
+      "predicted": "Diabetes",
+      "count": 27,
+      "row_percentage": 45.76
+    },
+    {
+      "actual": "Diabetes",
+      "predicted": "No Diabetes",
+      "count": 168,
+      "row_percentage": 40.19
+    },
+    {
+      "actual": "No Diabetes",
+      "predicted": "Diabetes",
+      "count": 81,
+      "row_percentage": 3.1
+    }
+  ],
+  "recommended_techniques": [
+    "class_weight",
+    "combined_imbalance_and_optuna",
+    "hybrid_sampling",
+    "optuna_hpo",
+    "smote",
+    "smotenc"
+  ],
+  "summary_conclusion": "Evaluasi baseline XGBoost membuktikan adanya kelemahan struktural akibat ketidakseimbangan kelas ekstrem (Recall Prediabetes = 0.0169, F1 Prediabetes = 0.0323) serta belum optimalnya batas keputusan pada hyperparameter default. Oleh karena itu, skenario peningkatan performa E1–E6 (Class Weight, SMOTE/SMOTENC, Hybrid Sampling, dan Optimasi Hyperparameter Optuna) secara empiris direkomendasikan untuk diuji."
+}

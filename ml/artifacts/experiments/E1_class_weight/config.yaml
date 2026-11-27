@@ -1,0 +1,7 @@
+code: E1
+name: XGBoost + Class Weight (Balanced)
+technique: class_weight
+imbalance_strategy: class_weight
+xgb_params:
+  default: true
+seed: 42

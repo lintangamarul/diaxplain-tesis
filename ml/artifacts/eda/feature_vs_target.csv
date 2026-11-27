@@ -1,0 +1,22 @@
+feature,label_id,group,mean_no_diabetes,mean_prediabetes,mean_diabetes,spearman_corr,abs_spearman_corr
+GenHlth,Penilaian Kesehatan Umum Mandiri,kondisi_kesehatan,2.4714,3.2271,3.4163,0.318,0.318
+HighBP,Tekanan Darah Tinggi (Hipertensi),kondisi_kesehatan,0.385,0.6508,0.7796,0.277,0.277
+DiffWalk,Kesulitan Serius Berjalan / Naik Tangga,kondisi_kesehatan,0.1264,0.3254,0.4049,0.2609,0.2609
+BMI,Indeks Massa Tubuh (BMI),fisik_demografi,27.6307,31.3932,31.9259,0.2336,0.2336
+PhysHlth,Hari Kesehatan Fisik Kurang Baik (0–30 Hari),kondisi_kesehatan,3.6712,6.5356,7.827,0.2295,0.2295
+HighChol,Kolesterol Tinggi,kondisi_kesehatan,0.3906,0.6339,0.7041,0.2227,0.2227
+Age,Kelompok Usia,fisik_demografi,7.6676,8.6407,9.2763,0.1982,0.1982
+Income,Tingkat Pendapatan Rumah Tangga (Skala Relatif 1–8),sosial_ekonomi,6.0155,5.2068,5.1233,-0.1799,0.1799
+HeartDiseaseorAttack,Penyakit Jantung Koroner / Serangan Jantung,kondisi_kesehatan,0.0697,0.1119,0.2113,0.1659,0.1659
+MentHlth,Hari Kesehatan Mental Kurang Baik (0–30 Hari),kondisi_kesehatan,2.8568,4.7254,4.8093,0.151,0.151
+Education,Tingkat Pendidikan Terakhir,sosial_ekonomi,5.0261,4.7085,4.6917,-0.1342,0.1342
+PhysActivity,Aktivitas Fisik / Olahraga (30 Hari Terakhir),gaya_hidup,0.7782,0.6814,0.6214,-0.1264,0.1264
+Stroke,Riwayat Stroke,kondisi_kesehatan,0.0338,0.0475,0.0932,0.0983,0.0983
+Veggies,Konsumsi Sayur Harian (≥ 1 Kali/Hari),gaya_hidup,0.8196,0.8,0.7409,-0.0665,0.0665
+CholCheck,Pemeriksaan Kolesterol (5 Tahun Terakhir),akses_layanan,0.9463,0.9831,0.9842,0.064,0.064
+Smoker,Riwayat Merokok (≥ 100 Batang Seumur Hidup),gaya_hidup,0.4346,0.5017,0.5172,0.0588,0.0588
+HvyAlcoholConsump,Konsumsi Alkohol Berat,gaya_hidup,0.0645,0.0441,0.0253,-0.0571,0.0571
+Fruits,Konsumsi Buah Harian (≥ 1 Kali/Hari),gaya_hidup,0.636,0.5458,0.5784,-0.0455,0.0455
+NoDocbcCost,Kendala Biaya Berobat ke Dokter (12 Bulan Terakhir),akses_layanan,0.0784,0.1254,0.1023,0.0345,0.0345
+Sex,Jenis Kelamin Biologis,fisik_demografi,0.429,0.4542,0.4541,0.0183,0.0183
+AnyHealthcare,Kepemilikan Jaminan Kesehatan (BPJS / Asuransi),akses_layanan,0.9484,0.9661,0.9565,0.015,0.015

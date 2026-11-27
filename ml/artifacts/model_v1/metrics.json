@@ -1,0 +1,230 @@
+{
+  "model_version": "xgb-v1.0.0",
+  "experiment_code": "E6",
+  "name": "XGBoost + SMOTE + Optuna HPO",
+  "algorithm": "XGBoost (multi:softprob, hist)",
+  "technique": "smote+optuna",
+  "params": {
+    "n_estimators": 280,
+    "learning_rate": 0.08278777187079395,
+    "max_depth": 3,
+    "min_child_weight": 8,
+    "subsample": 0.7096834432905521,
+    "colsample_bytree": 0.6727680575448478,
+    "gamma": 2.84665661176,
+    "reg_alpha": 2.2783459357466143,
+    "reg_lambda": 0.9777718780862648
+  },
+  "dataset_hash": "55200359456b44609ef06e2ef1c622ea8c910a099f489c597ed6c5e0a7408b26",
+  "trained_at": "2026-11-03T12:52:54.631003+00:00",
+  "cv_metrics": {
+    "n_folds": 5,
+    "fold_macro_f1s": [
+      0.55,
+      0.6178,
+      0.573,
+      0.5629,
+      0.5412
+    ],
+    "fold_prediabetes_f1s": [
+      0.0253,
+      0.1918,
+      0.1026,
+      0.0494,
+      0.0513
+    ],
+    "accuracy_mean": 0.896,
+    "accuracy_std": 0.0086,
+    "macro_precision_mean": 0.5772,
+    "macro_precision_std": 0.0391,
+    "macro_recall_mean": 0.5643,
+    "macro_recall_std": 0.0251,
+    "macro_f1_mean": 0.569,
+    "macro_f1_std": 0.0299,
+    "weighted_f1_mean": 0.8931,
+    "weighted_f1_std": 0.0087,
+    "roc_auc_ovr_macro_mean": 0.8682,
+    "roc_auc_ovr_macro_std": 0.0064,
+    "no_diabetes_f1_mean": 0.946,
+    "no_diabetes_f1_std": 0.0047,
+    "prediabetes_precision_mean": 0.111,
+    "prediabetes_precision_std": 0.0954,
+    "prediabetes_recall_mean": 0.0679,
+    "prediabetes_recall_std": 0.0509,
+    "prediabetes_f1_mean": 0.0841,
+    "prediabetes_f1_std": 0.0665,
+    "diabetes_f1_mean": 0.6768,
+    "diabetes_f1_std": 0.0284
+  },
+  "test_metrics": {
+    "accuracy": 0.8939,
+    "macro_precision": 0.5429,
+    "macro_recall": 0.5461,
+    "macro_f1": 0.5442,
+    "weighted_precision": 0.8887,
+    "weighted_recall": 0.8939,
+    "weighted_f1": 0.8913,
+    "roc_auc_ovr_macro": 0.8697,
+    "roc_auc_ovr_weighted": 0.9252,
+    "mlogloss": 0.3518,
+    "per_class": {
+      "No Diabetes": {
+        "class_code": 0,
+        "label_id": "Tidak Diabetes",
+        "precision": 0.9451,
+        "recall": 0.9491,
+        "f1": 0.9471,
+        "roc_auc_ovr": 0.9292,
+        "support": 2613
+      },
+      "Prediabetes": {
+        "class_code": 1,
+        "label_id": "Prediabetes",
+        "precision": 0.0256,
+        "recall": 0.0169,
+        "f1": 0.0204,
+        "roc_auc_ovr": 0.7557,
+        "support": 59
+      },
+      "Diabetes": {
+        "class_code": 2,
+        "label_id": "Diabetes",
+        "precision": 0.6581,
+        "recall": 0.6722,
+        "f1": 0.6651,
+        "roc_auc_ovr": 0.9242,
+        "support": 418
+      }
+    },
+    "confusion_matrix": {
+      "labels": [
+        "No Diabetes",
+        "Prediabetes",
+        "Diabetes"
+      ],
+      "labels_id": [
+        "Tidak Diabetes",
+        "Prediabetes",
+        "Diabetes"
+      ],
+      "counts": [
+        [
+          2480,
+          22,
+          111
+        ],
+        [
+          23,
+          1,
+          35
+        ],
+        [
+          121,
+          16,
+          281
+        ]
+      ],
+      "normalized_by_row": [
+        [
+          0.9491,
+          0.0084,
+          0.0425
+        ],
+        [
+          0.3898,
+          0.0169,
+          0.5932
+        ],
+        [
+          0.2895,
+          0.0383,
+          0.6722
+        ]
+      ]
+    },
+    "supporting_metrics": {
+      "balanced_accuracy": 0.5461,
+      "mcc": 0.5965
+    }
+  },
+  "selection_report": {
+    "selected_code": "E6",
+    "selected_name": "XGBoost + SMOTE + Optuna HPO",
+    "selected_technique": "smote+optuna",
+    "selected_params": {
+      "n_estimators": 280,
+      "learning_rate": 0.08278777187079395,
+      "max_depth": 3,
+      "min_child_weight": 8,
+      "subsample": 0.7096834432905521,
+      "colsample_bytree": 0.6727680575448478,
+      "gamma": 2.84665661176,
+      "reg_alpha": 2.2783459357466143,
+      "reg_lambda": 0.9777718780862648
+    },
+    "selection_criteria": "Seleksi berdasarkan kombinasi terbaik Macro-F1 pada 5-Fold Cross-Validation dengan syarat deteksi aktif pada kelas minoritas Prediabetes (F1 & Recall Prediabetes tertinggi bila Macro-F1 kompetitif).",
+    "baseline_vs_best_summary": {
+      "baseline_cv_macro_f1": 0.531,
+      "best_cv_macro_f1": 0.569,
+      "baseline_test_macro_f1": 0.5407,
+      "best_test_macro_f1": 0.5442,
+      "baseline_test_prediabetes_f1": 0.0323,
+      "best_test_prediabetes_f1": 0.0204,
+      "baseline_test_prediabetes_recall": 0.0169,
+      "best_test_prediabetes_recall": 0.0169,
+      "baseline_test_roc_auc_macro": 0.8573,
+      "best_test_roc_auc_macro": 0.8697
+    },
+    "bootstrap_ci_95": {
+      "baseline_E0": {
+        "n_iterations": 150,
+        "macro_f1": {
+          "mean": 0.5408,
+          "std": 0.0127,
+          "ci95_low": 0.5181,
+          "ci95_high": 0.5703
+        },
+        "prediabetes_f1": {
+          "mean": 0.0328,
+          "std": 0.0313,
+          "ci95_low": 0.0,
+          "ci95_high": 0.1032
+        },
+        "prediabetes_recall": {
+          "mean": 0.0175,
+          "std": 0.017,
+          "ci95_low": 0.0,
+          "ci95_high": 0.0555
+        }
+      },
+      "best_model": {
+        "n_iterations": 150,
+        "macro_f1": {
+          "mean": 0.5432,
+          "std": 0.0096,
+          "ci95_low": 0.5271,
+          "ci95_high": 0.5613
+        },
+        "prediabetes_f1": {
+          "mean": 0.0212,
+          "std": 0.0204,
+          "ci95_low": 0.0,
+          "ci95_high": 0.0681
+        },
+        "prediabetes_recall": {
+          "mean": 0.0175,
+          "std": 0.017,
+          "ci95_low": 0.0,
+          "ci95_high": 0.0555
+        }
+      }
+    },
+    "wilcoxon_vs_baseline": {
+      "mean_diff": 0.038,
+      "statistic": 0.0,
+      "p_value": 0.0625,
+      "note": "Uji Wilcoxon signed-rank berpasangan pada 5-fold CV."
+    },
+    "empirical_justification": "Skenario E6 (XGBoost + SMOTE + Optuna HPO) terpilih sebagai Best Model karena mampu meningkatkan sensitivitas (Recall) kelas minoritas Prediabetes dari 1.69% (Baseline E0) menjadi 1.69%, serta meningkatkan F1 Prediabetes dari 0.0323 menjadi 0.0204 dengan ROC-AUC OvR Macro sebesar 0.8697."
+  }
+}

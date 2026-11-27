@@ -1,0 +1,9 @@
+code,name,technique,macro_f1_mean,macro_f1_std,prediabetes_f1_mean,prediabetes_recall_mean,roc_auc_ovr_macro_mean,accuracy_mean,train_seconds,wilcoxon_p_value
+E0,Baseline XGBoost (Default),baseline_default,0.531,0.0062,0.0,0.0,0.8457,0.8987,2.33,1.0
+E1,XGBoost + Class Weight (Balanced),class_weight,0.5294,0.0139,0.02,0.017,0.8199,0.8713,1.62,0.8125
+E2,XGBoost + SMOTE (Partial Strategy),smote,0.5387,0.0124,0.0265,0.017,0.8388,0.8949,2.31,0.1875
+E2b,XGBoost + SMOTENC (Categorical-Aware),smotenc,0.5386,0.0211,0.0354,0.0255,0.826,0.8929,5.89,0.8125
+E3,XGBoost + Hybrid Sampling (SMOTETomek),hybrid_smotetomek,0.5323,0.0039,0.0067,0.0042,0.8397,0.8947,3.1,0.625
+E4,XGBoost + Optuna HPO (Tanpa Imbalance Handling),optuna_only,0.5423,0.014,0.0229,0.0128,0.8572,0.9005,3.06,0.125
+E5,XGBoost + Class Weight + Optuna HPO,class_weight+optuna,0.539,0.0213,0.0538,0.0553,0.8446,0.8585,4.92,0.4375
+E6,XGBoost + SMOTE + Optuna HPO,smote+optuna,0.569,0.0299,0.0841,0.0679,0.8682,0.896,2.84,0.0625

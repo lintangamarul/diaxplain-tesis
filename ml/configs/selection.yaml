@@ -1,0 +1,6 @@
+primary_metric: "macro_f1_cv_mean"
+tie_breaker_metric: "prediabetes_f1_cv_mean"
+secondary_tie_breaker: "prediabetes_recall_cv_mean"
+bootstrap_iterations: 200
+seed: 42
+

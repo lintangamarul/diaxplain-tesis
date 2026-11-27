@@ -1,0 +1,14 @@
+seed: 42
+n_trials: 12
+cv_folds: 3
+search_space:
+  n_estimators: [150, 600]
+  learning_rate: [0.01, 0.25]
+  max_depth: [3, 9]
+  min_child_weight: [1, 15]
+  subsample: [0.6, 1.0]
+  colsample_bytree: [0.6, 1.0]
+  gamma: [0.0, 4.0]
+  reg_alpha: [0.001, 5.0]
+  reg_lambda: [0.001, 5.0]
+
