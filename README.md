@@ -124,6 +124,13 @@ docker compose up --build
 
 ## Dokumentasi
 
+### Panduan Penggunaan per Peran
+- [docs/PANDUAN_AKSES_DAN_PERAN.md](docs/PANDUAN_AKSES_DAN_PERAN.md) — Ringkasan RBAC, akun demo & navigasi aplikasi
+- [docs/PANDUAN_PENGGUNA_UMUM.md](docs/PANDUAN_PENGGUNA_UMUM.md) — Panduan Pengguna Umum (skrining 21 fitur, laporan SPK, perbandingan, privasi UU PDP)
+- [docs/PANDUAN_TENAGA_MEDIS.md](docs/PANDUAN_TENAGA_MEDIS.md) — Panduan Tenaga Medis / Klinisi (pseudonim pasien & penilaian narasi LLM RM6)
+- [docs/PANDUAN_ADMIN_PENELITI.md](docs/PANDUAN_ADMIN_PENELITI.md) — Panduan Admin & Peneliti (eksperimen E0–E6, API key LLM, tata kelola & ekspor CSV)
+
+### Dokumentasi Teknis & Riset
 - [IMPLEMENTATION_PLAN.md](IMPLEMENTATION_PLAN.md)
 - [docs/EXPERIMENT_GUIDE.md](docs/EXPERIMENT_GUIDE.md)
 - [docs/LLM_EVALUATION_GUIDE.md](docs/LLM_EVALUATION_GUIDE.md)
